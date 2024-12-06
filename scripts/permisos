@@ -29,9 +29,9 @@ else
     read -n1 user
     
     msg=0
-    
-    while [ $msg != 3 ]; do
-    
+
+    for permiso in r w x
+    do
     case $msg in
     0) echo -e "\nPermisos de lectura? (s/n):";;
     1) echo -e "\nPermisos de escritura? (s/n):";;
@@ -40,7 +40,6 @@ else
     
     read -n1 respuesta
     
-    for permiso in r w x; do
     if [ $respuesta = "s" ]; then
             chmod "$user"+"$permiso" "$archivo"
     else
