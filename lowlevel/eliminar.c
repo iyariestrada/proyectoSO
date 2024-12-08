@@ -4,10 +4,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-//#define ORIGINAL_FILE "index"
-//#define TEMP_FILE "index_temp"
-//#define SEPARATOR "****"
-
 void eliminarN(const char *nombre) {
     int descriptorIndex = open("index", O_RDONLY);
     if (descriptorIndex < 0) {
