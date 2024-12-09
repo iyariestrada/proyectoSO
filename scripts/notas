@@ -1,6 +1,7 @@
 #!/bin/bash
 red="\e[31m"
-yellow="\x1b[38;5;10m"
+lime="\x1b[38;5;10m"
+yellow="\x1b[38;5;11m"
 white="\x1b[38;5;15m"
 blue="\x1b[38;5;12m"
 index="index"
@@ -12,12 +13,12 @@ while true; do
     clear
     echo -e "${yellow}Bloc de Notas"
     echo -e "${yellow}----------------"
-    echo -e "${yellow}Teclas de navegación:"
-    echo -e "${yellow}  s: Desplazarse 5 notas abajo"
-    echo -e "${yellow}  w: Desplazarse 5 notas arriba"
-    echo -e "${yellow}  i: Empezar a escribir el nombre de la nota"
-    echo -e "${yellow}  x: Salir"
-    echo -e " \n ${blue}Notas: ${white}\n" 
+    echo -e "${white}Teclas de navegación:"
+    echo -e "${red}  s: ${white}Desplazarse 5 notas abajo"
+    echo -e "${red}  w: ${white}Desplazarse 5 notas arriba"
+    echo -e "${red}  i: ${white}Empezar a escribir el nombre de la nota"
+    echo -e "${red}  x: ${white}Salir"
+    echo -e " \n ${blue}Notas: ${white}\n"
 
     #primeras 5 de idx
     if [[ ! -f $idx ]]; then
@@ -26,9 +27,9 @@ while true; do
         tail -n +$((desp + 1)) "$idx" | head -n 5
     fi
     echo
-    echo -e "${yellow}Seleccione una opción: ${blue}"
+    echo -e "${yellow}Seleccione una opcion: ${white}"
 
-    read -n 1 opcion
+    read -n1 opcion
 
     case $opcion in
         s) #5 abajo
@@ -43,56 +44,57 @@ while true; do
                 desp=0
             fi
             ;;
-        i) 
-            echo
-            echo -n "Escriba el nombre de la nota: "
-            read nombre
+        i)
+                echo
+                echo -n "Escriba el nombre de la nota: "
+                read nombre
 
-            # la nota existe?
-            if grep -q "^$nombre -" "$idx"; then
-				echo " "
-                echo -e "${yellow}Que accion quiere realizar?"
-                echo -e "${blue}  o: Abrir nota"
-                echo -e "${red}  d: Eliminar nota"
-                read -n 1 op #guarda la accion
+                # la nota existe?
+                if grep -q "^$nombre -" "$idx"; then
+                        echo " "
+                        echo -e "${yellow}Que accion quiere realizar?"
+                        echo -e "${blue}  o: Abrir nota"
+                        echo -e "${red}  d: Eliminar nota"
+                        read -n 1 op # guarda la accion
+                        echo
 
-                if [[ $op == "o" ]]; then
-                    I_linea=$(grep -n "^$nombre$" "$index" | cut -d: -f1)
-                    if [[ -n $I_linea ]]; then
-                        echo
-                        echo -e "${blue}Contenido de la nota:${white}"
-                        echo
-                        grep -A 3 "^$nombre$" "$index"
-                    else
-                        echo
-                        echo -e "${red}Nota no encontrada.${white}"
-                    fi
-                elif [[ $op == "d" ]]; then
-					./eliminar "$nombre"
-					if [[ $? -eq 0 ]]; then
-						echo -e "${yellow} Se elimino correctamente la nota"
-					else
-						echo -e "${yellow}Error al eliminar la nota"
-					fi
-				else
-					echo "Accion no valida"
-				fi
-			else
-				echo "La nota '$nombre' se encontro"
-			fi
-            ;;
+                        if [[ $op == "o" ]]; then
+                        I_linea=$(grep -n "^$nombre -" "$idx" | cut -d: -f1)
+                        if [[ -n $I_linea ]]; then
+                                echo
+                                echo -e "${blue}Contenido de la nota:${white}"
+                                echo
+                                grep -A 3 "^$nombre -" "$idx"
+                        else
+                                echo
+                                echo -e "${red}Nota no encontrada.${white}"
+                        fi
+                        elif [[ $op == "d" ]]; then
+                        ./eliminar "$nombre"
+                        if [[ $? -eq 0 ]]; then
+                                echo -e "${yellow} Se elimino correctamente la nota"
+                        else
+                                echo -e "${yellow}Error al eliminar la nota"
+                        fi
+                        else
+                        echo "Accion no valida"
+                        fi
+                else
+                        echo "La nota '$nombre' no se encontró"
+                fi
+                ;;
         x) #Salir
             echo
             echo -e "${yellow}Saliendo del bloc de notas."
             break
             ;;
-        *) # Opción novalida
+        *) # Opcion valida
             echo
-            echo -e "${yellow}Tecla no valida, Intentelo de nuevo.\n"
+            echo -e "${yellow}Tecla no valida, Intentelo de nuevo.\n${white}"
             ;;
     esac
 
     echo
-    echo -e "${yellow}Presione cualquier tecla para continuar..."
-    read -n 1
+    echo -e "Presione cualquier tecla para continuar..."
+    read -n1
 done
