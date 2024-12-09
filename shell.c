@@ -114,7 +114,7 @@ void cmd_with_pipes(char *cmd1, char *cmd2, char *cmd3)
         close(fd[0]);
         close(fd[1]);
 
-        if ((strcmp(args[0], "rot47") == 0) || (strcmp(args[0], "crear") == 0) || (strcmp(args[0], "eliminar") == 0)) // cmd propio
+        if ((strcmp(args1[0], "rot47") == 0) || (strcmp(args1[0], "crear") == 0) || (strcmp(args1[0], "eliminar") == 0)) // cmd propio
             cmd_propio(args1);
         else
         {
@@ -137,7 +137,7 @@ void cmd_with_pipes(char *cmd1, char *cmd2, char *cmd3)
             close(fd2[0]);
             close(fd2[1]);
 
-            if ((strcmp(args[0], "rot47") == 0) || (strcmp(args[0], "crear") == 0) || (strcmp(args[0], "eliminar") == 0)) // cmd propio
+            if ((strcmp(args2[0], "rot47") == 0) || (strcmp(args2[0], "crear") == 0) || (strcmp(args2[0], "eliminar") == 0)) // cmd propio
                 cmd_propio(args2);
             else
             {
@@ -157,7 +157,7 @@ void cmd_with_pipes(char *cmd1, char *cmd2, char *cmd3)
             close(fd[0]);
             close(fd[1]);
 
-            if ((strcmp(args[0], "rot47") == 0) || (strcmp(args[0], "crear") == 0) || (strcmp(args[0], "eliminar") == 0)) // cmd propio
+            if ((strcmp(args3[0], "rot47") == 0) || (strcmp(args3[0], "crear") == 0) || (strcmp(args3[0], "eliminar") == 0)) // cmd propio
                 cmd_propio(args3);
             else
             {
@@ -179,7 +179,7 @@ void cmd_with_pipes(char *cmd1, char *cmd2, char *cmd3)
             close(fd[0]);
             close(fd[1]);
 
-            if ((strcmp(args[0], "rot47") == 0) || (strcmp(args[0], "crear") == 0) || (strcmp(args[0], "eliminar") == 0))
+            if ((strcmp(args2[0], "rot47") == 0) || (strcmp(args2[0], "crear") == 0) || (strcmp(args2[0], "eliminar") == 0))
                 cmd_propio(args2);
 
             else
