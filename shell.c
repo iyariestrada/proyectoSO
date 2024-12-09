@@ -15,6 +15,7 @@ char *white = "\x1b[38;5;15m";
 void get_cmd_args(char *linea, char **args);
 void cmd_with_pipes(char *cmd1, char *cmd2, char *cmd3);
 void cmd_propio(char **args);
+void redireccionamiento(char **args);
 
 int main()
 {
@@ -68,6 +69,7 @@ int main()
             {
                 if (fork() == 0)
                 {
+                    redireccionamiento(args);
                     execvp(args[0], args);
                     perror("Error al ejecutar el comando.\n");
                     exit(EXIT_FAILURE);
@@ -116,6 +118,7 @@ void cmd_with_pipes(char *cmd1, char *cmd2, char *cmd3)
             cmd_propio(args1);
         else
         {
+            redireccionamiento(args1);
             execvp(args1[0], args1);
             perror("Error al ejecutar el comando.\n");
             exit(EXIT_FAILURE);
@@ -138,6 +141,7 @@ void cmd_with_pipes(char *cmd1, char *cmd2, char *cmd3)
                 cmd_propio(args2);
             else
             {
+                redireccionamiento(args2);
                 execvp(args2[0], args2);
                 perror("Error al ejecutar el comando.\n");
                 exit(EXIT_FAILURE);
@@ -157,6 +161,7 @@ void cmd_with_pipes(char *cmd1, char *cmd2, char *cmd3)
                 cmd_propio(args3);
             else
             {
+                redireccionamiento(args3);
                 execvp(args3[0], args3);
                 perror("Error al ejecutar el comando.\n");
                 exit(EXIT_FAILURE);
@@ -179,6 +184,7 @@ void cmd_with_pipes(char *cmd1, char *cmd2, char *cmd3)
 
             else
             {
+                redireccionamiento(args2);
                 execvp(args2[0], args2);
                 perror("Error al ejecutar el comando.\n");
                 exit(EXIT_FAILURE);
@@ -231,4 +237,38 @@ void cmd_propio(char **args)
     }
     else
         printf("El comando %s no fue reconocido.\n", args[0]);
+}
+
+void redireccionamiento(char **args)
+{
+    for (int idx = 0; args[idx] != NULL; idx++)
+    {
+        if (strcmp(args[idx], ">") == 0)
+        {
+            int fd = open(args[idx + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+            if (fd < 0)
+            {
+                perror("Error al abrir el archivo");
+                exit(EXIT_FAILURE);
+            }
+            dup2(fd, STDOUT_FILENO);
+            close(fd);
+            args[idx] = NULL;
+            break;
+        }
+        else if (strcmp(args[idx], "<") == 0)
+        {
+            int fd = open(args[idx + 1], O_RDONLY);
+            if (fd < 0)
+            {
+                perror("Error al abrir el archivo");
+                exit(EXIT_FAILURE);
+            }
+
+            dup2(fd, STDIN_FILENO);
+            close(fd);
+            args[idx] = NULL;
+            break;
+        }
+    }
 }
