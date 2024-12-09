@@ -3,9 +3,9 @@
 archivo="$1"
 
 if [ -z $archivo ]; then
-        echo "no hay.\n"
+        echo "La sintaxis para usar este script es: ./permisos <archivo>.\n"
 elif [ ! -e $archivo ]; then
-        echo "No existe nombre.\n"
+        echo "El archivo $archivo no existe.\n"
 else
 
 red="\e[31m"
@@ -16,8 +16,7 @@ blue="\x1b[38;5;12m"
 run=1
 while [ $run != 0 ]; do
 
-        echo -e "${yellow}Seleccione el usuario al que desea editar sus permisos
-:"
+        echo -e "${yellow}Seleccione el usuario al que desea editar sus permisos:"
         echo -e "${red}u${white} usuario"
         echo -e "${red}g${white} grupo"
         echo -e "${red}o${white} otros\n"
@@ -25,7 +24,6 @@ while [ $run != 0 ]; do
         read -n1 user
 
         msg=0
-
 
         for permiso in r w x
         do
@@ -48,8 +46,8 @@ while [ $run != 0 ]; do
         msg=`expr $msg + 1`
         done
 
-        echo -e "\n${yellow}Desea continuar con la edicion de permisos para el a
-rchivo $archivo?${blue} (s/n)${white}:"
+        echo -e "\n${yellow}Desea continuar con la edicion de permisos para el 
+        archivo $archivo?${blue} (s/n)${white}:"
         read -n1 continuar
 
         if [ $continuar = "n" ]; then
