@@ -59,12 +59,12 @@ while true; do
                         echo
 
                         if [[ $op == "o" ]]; then
-                        I_linea=$(grep -n "^$nombre -" "$idx" | cut -d: -f1)
+                        I_linea=$(grep -n "^$nombre$" "$index" | cut -d: -f1)
                         if [[ -n $I_linea ]]; then
                                 echo
                                 echo -e "${blue}Contenido de la nota:${white}"
                                 echo
-                                grep -A 3 "^$nombre -" "$idx"
+                                grep -A 3 "^$nombre$" "$index"
                         else
                                 echo
                                 echo -e "${red}Nota no encontrada.${white}"
@@ -72,15 +72,15 @@ while true; do
                         elif [[ $op == "d" ]]; then
                         ./eliminar "$nombre"
                         if [[ $? -eq 0 ]]; then
-                                echo -e "${yellow} Se elimino correctamente la nota"
+                                echo -e "${lime}Se elimino correctamente la nota"
                         else
-                                echo -e "${yellow}Error al eliminar la nota"
+                                echo -e "${red}Error al eliminar la nota"
                         fi
                         else
-                        echo "Accion no valida"
+                        echo -e "${red}Accion no valida"
                         fi
                 else
-                        echo "La nota '$nombre' no se encontró"
+                        echo -e "${red}La nota '$nombre' no se encontro.${white}"
                 fi
                 ;;
         x) #Salir
