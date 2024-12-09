@@ -86,7 +86,7 @@ while true; do
             echo -e "${yellow}Saliendo del bloc de notas."
             break
             ;;
-        *) # Opción noválida
+        *) 
             echo
             echo -e "${yellow}Tecla no valida, Intentelo de nuevo.\n"
             ;;
