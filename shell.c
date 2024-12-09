@@ -35,10 +35,10 @@ int main()
         char *cmd3 = strtok(NULL, "|");
 
         if (cmd3)
-            cmd_with_pipe(cmd1, cmd2, cmd3);
+            cmd_with_pipes(cmd1, cmd2, cmd3);
 
         else if (cmd2)
-            cmd_with_pipe(cmd1, cmd2, NULL);
+            cmd_with_pipes(cmd1, cmd2, NULL);
 
         else
         {
