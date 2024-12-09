@@ -15,8 +15,8 @@ while true; do
     echo -e "${yellow}Teclas de navegación:"
     echo -e "${yellow}  s: Desplazarse 5 notas abajo"
     echo -e "${yellow}  w: Desplazarse 5 notas arriba"
-    echo -e "${blue}  i: Empezar a escribir el nombre de la nota"
-    echo -e "${red}  x: Salir"
+    echo -e "${yellow}  i: Empezar a escribir el nombre de la nota"
+    echo -e "${yellow}  x: Salir"
     echo -e " \n ${blue}Notas: ${white}\n" 
 
     #primeras 5 de idx
@@ -70,7 +70,7 @@ while true; do
                 elif [[ $op == "d" ]]; then
 					./eliminar "$nombre"
 					if [[ $? -eq 0 ]]; then
-						echo -e "${yellow}Se elimino correctamente la nota"
+						echo -e "${yellow} Se elimino correctamente la nota"
 					else
 						echo -e "${yellow}Error al eliminar la nota"
 					fi
@@ -86,7 +86,7 @@ while true; do
             echo -e "${yellow}Saliendo del bloc de notas."
             break
             ;;
-        *) 
+        *) # Opción novalida
             echo
             echo -e "${yellow}Tecla no valida, Intentelo de nuevo.\n"
             ;;
